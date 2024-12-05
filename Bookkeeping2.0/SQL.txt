@@ -1,0 +1,80 @@
+CREATE TABLE `Category_Date`(
+    `CD_ID` BIGINT NOT NULL,
+    `CategoryID` NVARCHAR(255) NOT NULL,
+    `DateID` INT NOT NULL
+);
+ALTER TABLE
+    `Category_Date` ADD CONSTRAINT `category_date_cd_id_primary` PRIMARY KEY(`CD_ID`);
+CREATE TABLE `Bookkeeping`(
+    `NameID` BIGINT NOT NULL,
+    `Name` NVARCHAR(255) NOT NULL,
+    `CategoryID` NVARCHAR(255) NOT NULL,
+    `DateID` INT NOT NULL,
+    `AccountID` NVARCHAR(255) NOT NULL,
+    `Revenue` BIGINT NULL,
+    `Expense` BIGINT NULL,
+    `Note` NVARCHAR(255) NULL
+);
+ALTER TABLE
+    `Bookkeeping` ADD CONSTRAINT `bookkeeping_nameid_primary` PRIMARY KEY(`NameID`);
+CREATE TABLE `Date`(
+    `DateID` INT NOT NULL,
+    `Date` NVARCHAR(255) NOT NULL
+);
+ALTER TABLE
+    `Date` ADD CONSTRAINT `date_dateid_primary` PRIMARY KEY(`DateID`);
+CREATE TABLE `Category`(
+    `CategoryID` NVARCHAR(255) NOT NULL,
+    `Category` NVARCHAR(255) NOT NULL
+);
+ALTER TABLE
+    `Category` ADD CONSTRAINT `category_categoryid_primary` PRIMARY KEY(`CategoryID`);
+CREATE TABLE `Account`(
+    `AccountID` NVARCHAR(255) NOT NULL,
+    `Account` NVARCHAR(255) NOT NULL
+);
+ALTER TABLE
+    `Account` ADD CONSTRAINT `account_accountid_primary` PRIMARY KEY(`AccountID`);
+ALTER TABLE
+    `Category_Date` ADD CONSTRAINT `category_date_categoryid_foreign` FOREIGN KEY(`CategoryID`) REFERENCES `Category`(`CategoryID`);
+ALTER TABLE
+    `Bookkeeping` ADD CONSTRAINT `bookkeeping_categoryid_foreign` FOREIGN KEY(`CategoryID`) REFERENCES `Category`(`CategoryID`);
+ALTER TABLE
+    `Bookkeeping` ADD CONSTRAINT `bookkeeping_dateid_foreign` FOREIGN KEY(`DateID`) REFERENCES `Date`(`DateID`);
+ALTER TABLE
+    `Category_Date` ADD CONSTRAINT `category_date_dateid_foreign` FOREIGN KEY(`DateID`) REFERENCES `Date`(`DateID`);
+ALTER TABLE
+    `Bookkeeping` ADD CONSTRAINT `bookkeeping_accountid_foreign` FOREIGN KEY(`AccountID`) REFERENCES `Account`(`AccountID`);
+
+
+
+
+----------------------------
+
+
+
+INSERT INTO Date(DateID, Date)
+Values(202304, '2023-04'),
+(202305,'2023-05'),
+(202306,'2023-06'),
+(202307,'2023-07'),
+(202308,'2023-08'),
+(202309,'2023-09'),
+(202310,'2023-10');
+GO
+
+INSERT INTO Category(CategoryID,Category)
+Values ('RENT','Rent'),
+('INS','Insurace'),
+('IP','Internet & Phone'),
+('UT','Utilities'),
+('ED','Education'),
+('ENT','Entertainment'),
+('SP','Shopping'),
+('GH','Grocery & Health'),
+('PK','Parking'),
+('TRS','Transport'),
+('TVL','Traveling'),
+('GAS','Gas'),
+('RST','Restaurant'),
+('OT','Others');
